@@ -8,11 +8,14 @@ import wave
 import simpleaudio as sa
 
 
+_AUDIO_DIR = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), 'audio'
+)
+
+
 def skrrt(_func=None, *, audio_file=''):
     if audio_file == '':
-        audio_file = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), 'mario_15.wav'
-        )
+        audio_file = os.path.join(_AUDIO_DIR, 'mario.wav')
 
     def skrrt_decorator(func):
         return_val = mp.Queue()
@@ -25,7 +28,7 @@ def skrrt(_func=None, *, audio_file=''):
             except (FileNotFoundError, wave.Error):
                 print('\033[93mCould not load original file.\033[0m')
                 wave_obj = sa.WaveObject.from_wave_file(
-                    os.path.join(os.path.dirname(os.path.realpath(__file__)), 'failure.wav')
+                    os.path.join(_AUDIO_DIR, 'failure.wav')
                 )
                 failed = True
 
@@ -41,7 +44,9 @@ def skrrt(_func=None, *, audio_file=''):
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            p1 = mp.Process(target=subwrapper, args=(func, tuple(args), dict(kwargs)))
+            p1 = mp.Process(
+                target=subwrapper, args=(func, tuple(args), dict(kwargs))
+            )
             p2 = mp.Process(target=play_sound)
 
             p1.start()
