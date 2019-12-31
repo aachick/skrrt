@@ -22,13 +22,5 @@ setuptools.setup(
         'Operating System :: OS Independent'
     ],
     python_requires='>=3',
-    data_files=[
-        (
-            'audio',
-            [
-                os.path.join('audio', 'failure.wav'),
-                os.path.join('audio', 'mario.wav')
-            ]
-        )
-    ]
+    include_package_data=True
 )
