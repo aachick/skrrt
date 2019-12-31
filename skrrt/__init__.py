@@ -19,11 +19,21 @@ def skrrt(_func=None, *, audio_file=''):
         func_running = mp.Value(ctypes.c_bool, True)
 
         def play_sound():
-            wave_obj = sa.WaveObject.from_wave_file(audio_file)
+            failed = False
+            try:
+                wave_obj = sa.WaveObject.from_wave_file(audio_file)
+            except (FileNotFoundError, wave.Error):
+                print('\033[93mCould not load original file.\033[0m')
+                wave_obj = sa.WaveObject.from_wave_file(
+                    os.path.join(os.path.dirname(os.path.realpath(__file__)), 'failure.wav')
+                )
+                failed = True
 
             while func_running.value is True:
                 play_obj = wave_obj.play()
                 play_obj.wait_done()
+                if failed is True:
+                    break
 
         def subwrapper(func, args, kwargs):
             return_val.put(func(*args, **kwargs))
