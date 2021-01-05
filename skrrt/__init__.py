@@ -9,13 +9,13 @@ import simpleaudio as sa
 
 
 _AUDIO_DIR = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), 'audio'
+    os.path.dirname(os.path.realpath(__file__)), "audio"
 )
 
 
-def skrrt(_func=None, *, audio_file=''):
-    if audio_file == '':
-        audio_file = os.path.join(_AUDIO_DIR, 'mario.wav')
+def skrrt(_func=None, *, audio_file=""):
+    if not audio_file:
+        audio_file = os.path.join(_AUDIO_DIR, "mario.wav")
 
     def skrrt_decorator(func):
         return_val = mp.Queue()
@@ -26,9 +26,9 @@ def skrrt(_func=None, *, audio_file=''):
             try:
                 wave_obj = sa.WaveObject.from_wave_file(audio_file)
             except (FileNotFoundError, wave.Error):
-                print('\033[93mCould not load original file.\033[0m')
+                print("\033[93mCould not load original file.\033[0m")
                 wave_obj = sa.WaveObject.from_wave_file(
-                    os.path.join(_AUDIO_DIR, 'failure.wav')
+                    os.path.join(_AUDIO_DIR, "failure.wav")
                 )
                 failed = True
 

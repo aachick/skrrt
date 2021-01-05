@@ -2,11 +2,19 @@
 
 `skrrt` is a package designed to play audio files during the execution of other routines. Currently, only non-compressed `.wav` files are supported.
 
+## Installation
+
+1. Install with `pip` from the command line:
+
+```bash
+pip install git+https://github.com/aachick/skrrt.git
+```
+
 ## TODO list
 
 Some nice features to add to the decorator would be:
 
-* Support for other audio formats
+* Support for other audio formats than `.wav`
 
 * Support for playlists
 
@@ -39,6 +47,17 @@ def wasting_time():
     print("About to waste some time.")
     time.sleep(10)
     print("Now let's get back to business.")
+```
+
+`skrrt` can also be used from the command line:
+
+```bash
+skrrt sleep 5
+```
+
+With a custom `.wav` file:
+```bash
+skrrt -i mymusic.wav sleep 5
 ```
 
 ## Dependencies

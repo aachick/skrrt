@@ -21,6 +21,9 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent'
     ],
+    entry_points = {
+        'console_scripts': ['skrrt=skrrt:main'],
+    },
     python_requires='>=3',
     include_package_data=True,
     install_requires=['simpleaudio']
